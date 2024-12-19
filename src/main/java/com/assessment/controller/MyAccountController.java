@@ -1,12 +1,15 @@
 package com.assessment.controller;
 
 
+import com.assessment.dto.AnimeQouteResponse;
 import com.assessment.model.Account;
 import com.assessment.service.MyAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class MyAccountController {
@@ -41,6 +44,18 @@ public class MyAccountController {
     public ResponseEntity<HttpStatus> deleteAccount(@PathVariable("id") long id) {
         myAccountService.deleteAccount(id);
         return new ResponseEntity<>( HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/account")
+    public ResponseEntity<Map<String,Object>> getAllAccount(@RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
+
+        return new ResponseEntity<>(myAccountService.getAllAccounts(page,size), HttpStatus.OK);
+    }
+
+    @GetMapping("/animeqoutes")
+    public AnimeQouteResponse getAnimeQoutes( ) {
+        return  myAccountService.getQoutesfromAnimeChan();
     }
 
 
