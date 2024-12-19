@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -43,10 +44,14 @@ public class MyAccountService {
     @Transactional
     public Account updateAccount(long id,Account newAccount) {
             Account selectedAccount = accountRepository.findById(id).orElse(null);
-            selectedAccount.setAccountNumber(newAccount.getAccountNumber());
-            selectedAccount.setOwnerName(newAccount.getOwnerName());
-            selectedAccount.setBalance(newAccount.getBalance());
-            return  accountRepository.save(selectedAccount);
+            if (!ObjectUtils.isEmpty(selectedAccount)) {
+                selectedAccount.setAccountNumber(newAccount.getAccountNumber());
+                selectedAccount.setOwnerName(newAccount.getOwnerName());
+                selectedAccount.setBalance(newAccount.getBalance());
+                accountRepository.save(selectedAccount);
+            }
+            return  selectedAccount;
+
 
     }
 
