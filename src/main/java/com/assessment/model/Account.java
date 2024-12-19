@@ -26,10 +26,10 @@ public class Account {
     @Column(name = "owner_name")
     private String ownerName;
 
-    @Column(name = "account_type")
+    @Column(name = "balance")
     private BigInteger balance;
 
-    @Column(name = "balance")
+    @Column(name = "account_type")
     private short accountType;
 
 
